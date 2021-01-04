@@ -1,21 +1,23 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { List, ListItem, ListItemAvatar, ListItemText, ListItemSecondaryAction, Avatar, IconButton, Slide } from '@material-ui/core'
 import { Delete, MoneyOff } from '@material-ui/icons';
 import useStyles from './style'
+import { ExpenseTrackerContext } from '../../context/context'
+
+
+
+
 const ListComponent = () => {
-
+    const { deleteTransaction,state } = useContext(ExpenseTrackerContext)
     const classes = useStyles();
+    
+   
 
-    const transactions = [
-        { id: 1, type: 'Income', category: "Salary", amount: 150, date: "Wed Dec 16" },
-        { id: 2, type: 'Expense', category: "Pets", amount: 10, date: "Monday Nov 12" },
-        { id: 3, type: 'Income', category: "Business", amount: 50, date: "Friday Dec 18" }
-    ];
 
     return (
         <List dense={false} className={classes.list}>
             {
-                transactions.map(el =>
+                state.map(el =>
                     <Slide direction='down' in mountOnEnter unmountOnExit key={el.id}>
                         <ListItem>
                             <ListItemAvatar>
@@ -24,7 +26,7 @@ const ListComponent = () => {
 
                             <ListItemText primary={el.category} secondary={`$${el.amount} - ${el.date} `} />
                             <ListItemSecondaryAction>
-                                <IconButton edge="end" aria-label='delete' onClick=''><Delete /></IconButton>
+                                <IconButton edge="end" aria-label='delete' onClick={()=>deleteTransaction(el.id)}><Delete /></IconButton>
                             </ListItemSecondaryAction>
                         </ListItem>
                     </Slide>
